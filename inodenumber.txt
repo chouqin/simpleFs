@@ -1,0 +1,12 @@
+/:1
+    usr:2
+        data:5
+            data1:8
+            data2:9
+            data3:10
+            data4.txt:11
+        src:6
+        include:7
+    root:3
+    etc:4
+

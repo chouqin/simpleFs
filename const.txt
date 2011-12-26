@@ -1,0 +1,19 @@
+inodes per block: block_size: 512 inode_size: 4 * zone_number, so zone_number can be 16 or 8, or 4 or 2, we take 16, so inodes per block is 8
+imap: inode number: 10000, imap need 10000 bits = 1250 Bytes so the block_number is 1250 / 512 = 3 blocks
+zmap: zone number:  200M / 512 = 400K, zmap need 400K bits = 50K Bytes so zmap_block_number is 50k / 512 = 100 blocks
+indirect block:
+    one block can have 512 / 4 = 128 items, so one 1-level indirect block can index 128 / 2 KB = 64 KB
+    two level: 128 * 64KB = 8 MB
+    three level: 128 * 8MB = 1 GB too big for our system. so we can use two level index
+    1~10.direct block 5 KB(10 /2)
+    11.level 1: 64KB
+    12.level 2: 8MB
+    13.level 2: 8MB
+    14.level 3: 8MB
+so position number(in bytes) is easy to inflect to block number:
+    if p <= 10 * 512: from the inode table
+    if 10 * 512 < p < 64 * 1024 + 10 * 512: read the 1 level index block, and get the block number
+    if 64 * 1024 + 10 * 512 < p < 8 * 1024 * 1024 + 64 * 1024 + 10 * 512: read 2 level block, then read the 1 level block
+    if 8 * 1024 * 1024 + 64 * 1024 + 10 * 512 < p <  16 * 1024 * 1024 + 64 * 1024 + 10 * 512: same as above
+    if 16 * 1024 * 1024 + 64 * 1024 + 10 * 512 < p <  24 * 1024 * 1024 + 64 * 1024 + 10 * 512: same as above
+    why not block number?

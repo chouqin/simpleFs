@@ -1,0 +1,1 @@
+gcc  -g testroot.c path.c inode.c super.c cache.c filedes.c myfs.c -o testroot

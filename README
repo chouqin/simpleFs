@@ -1,0 +1,3 @@
+This is a simple file system customized from the minix file system. This file system use a virtual network driver to represent the disk.
+So the disk is just a file created by myself, to get it work, you should use the 'dd' command in the linux terminal to create a file named 'bigfile'
+which should be larger than 200M. Because it is so large, I don't push it to my repository.
